@@ -1,0 +1,12 @@
+{
+    "name": "hassanalisalem/urlshortener",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hassan Salem",
+            "email": "h.salem7788@gmail.com"
+        }
+    ],
+    "require": {}
+}
