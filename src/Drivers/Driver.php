@@ -4,6 +4,8 @@ namespace hassanalisalem\urlshortener\Drivers;
 
 abstract class Driver
 {
+    protected $httpClient;
+
     function __construct()
     {
 
@@ -27,20 +29,5 @@ abstract class Driver
     protected function getHttpClient()
     {
         return $this->httpClient;
-    }
-
-    /**
-     * Execute the request
-     *
-     * @param String $url
-     * @param Array $parameters
-     * @param String $verb
-     * @param Array $headers
-     */
-    public function request($url, $parameters = [], $verb = 'get', $headers = [])
-    {
-        $client = $this->httpClient;
-        $response = $client->request($url, $parameters, $verb, $headers);
-        return $response;
     }
 }
