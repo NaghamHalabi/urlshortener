@@ -3,13 +3,45 @@
 namespace hassanalisalem\urlshortener\Core;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
 
 class HttpClientAdapter implements HttpClientInterface
 {
-    function __construct($client = null)
+
+    /**
+     * @var http version
+     */
+    protected $version = '1.1';
+
+    /**
+     * @var http request default data
+     */
+    protected $data = [];
+
+    /**
+     * @var http request headers default
+     */
+    protected $headers = [];
+
+    /**
+     * @var http request url to be sent to
+     */
+    protected $url;
+
+    /**
+     * @var http request verb default value
+     */
+    protected $verb = 'get';
+
+    /**
+     * create new instance of http client adapter
+     * this should be enhanced to make it easy
+     * to change the http client if needed
+     */
+    function __construct()
     {
-        $this->client = $client?: new Client;
+        $this->client = new Client();
     }
 
     /**
@@ -19,7 +51,7 @@ class HttpClientAdapter implements HttpClientInterface
      * @param Array $parameters
      * @return String
      */
-    public function buildUrl($url, $parameters = [])
+    private function buildUrl($url, $parameters = [])
     {
         return $url.'?'.join('&', array_map(function ($key, $value) {
             return "$key=$value";
@@ -35,8 +67,98 @@ class HttpClientAdapter implements HttpClientInterface
      * @param Array $headers
      * @return JSON Object
      */
-    public function request($url, $parameters = [], $verb = 'get', $headers = [])
+    public function prepareRequest($verb, $url, $parameters = [])
     {
         $url = $this->buildUrl($url, $parameters);
+        $verb = strtoupper($verb);
+        $this->url = $url;
+        $this->verb = $verb;
+        return $this;
+    }
+
+    /**
+     * set request headers as array
+     *
+     * @param Array $headers
+     * @return HttpClientAdapter $this [for chaining]
+     */
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
+        return $this;
+    }
+
+    /**
+     * set data when send form
+     *
+     * @param Array $data
+     * @return HttpClientAdapter $this
+     */
+    public function setData($data)
+    {
+        $this->data = data;
+        return $this;
+    }
+
+    /**
+     * set request body
+     *
+     * @param String $body
+     * @return HttpClientAdapter $this
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+        return $this;
+    }
+
+    /**
+     * send the request
+     *
+     * @return HttpClientAdapter $this
+     */
+    public function send()
+    {
+        $this->response = $this->client->request(
+            $this->verb,
+            $this->url,
+            [
+                'headers' => $this->headers,
+                'body' => $this->body,
+                'version' => $this->version,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * get response status code
+     *
+     * @return integer
+     */
+    public function getStatusCode()
+    {
+        return $this->response->getStatusCode();
+    }
+
+    /**
+     * get response Body
+     *
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->response->getBody();
+    }
+
+    /**
+     * get response content
+     *
+     * @return string
+     */
+    public function getContents()
+    {
+        return $this->getBody()->getContents();
     }
 }
