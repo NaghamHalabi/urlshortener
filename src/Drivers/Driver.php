@@ -2,6 +2,15 @@
 
 namespace hassanalisalem\urlshortener\Drivers;
 
+/**
+ * the driver abstract class, here should be the validation
+ * of every thing inside every driver 
+ * TODO: implement validation
+ *
+ * @category Driver
+ *
+ * @author   Hassan Salem <h.salem7788@gmail.com>
+ */
 abstract class Driver
 {
     protected $httpClient;
