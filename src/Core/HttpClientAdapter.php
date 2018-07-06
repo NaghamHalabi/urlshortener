@@ -6,6 +6,14 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
 
+/**
+ * This class a Http Client wrapper
+ *
+ *
+ * @category HttpClient Wrapper
+ *
+ * @author   Hassan Salem <h.salem7788@gmail.com>
+ */
 class HttpClientAdapter implements HttpClientInterface
 {
 
@@ -56,6 +64,11 @@ class HttpClientAdapter implements HttpClientInterface
         return $url.'?'.join('&', array_map(function ($key, $value) {
             return "$key=$value";
         }, array_keys($parameters), $parameters));
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
