@@ -6,10 +6,10 @@ use hassanalisalem\urlshortener\Core\HttpClientAdapter;
 use hassanalisalem\urlshortener\Drivers\Bitly;
 use hassanalisalem\urlshortener\Shortener;
 
-class AbcTest extends TestCase
+class DriversTest extends TestCase
 {
 
-    public function testHassan()
+    public function testHttpClientAdapter()
     {
         $httpClient = new HttpClientAdapter;
         $response = $httpClient->prepareRequest('get', 'http://www.google.com')->send();
