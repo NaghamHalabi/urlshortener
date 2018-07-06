@@ -21,4 +21,21 @@ class TestCase extends PHPUnit
         parent::tearDown();
     }
 
+    public function getPrivateProperty($object, $propertyName)
+    {
+        $reflector = new \ReflectionClass(get_class($object));
+        $property = $reflector->getProperty($propertyName);
+        $property->setAccessible(true);
+        return $property->getValue($object);
+    }
+
+    public function invokePrivate($object, $methodName, ...$args)
+    {
+        $reflector = new \ReflectionClass(get_class($object));
+        $method = $reflector->getMethod($methodName);
+        $method->setAccessible(true);
+        $result = $method->invokeArgs($object, ...$args);
+        return $result;
+    }
+
 }
