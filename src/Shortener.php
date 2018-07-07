@@ -15,6 +15,7 @@ use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
  */
 class Shortener extends DriverLoader
 {
+
     /**
      * Create new instance of shortener.
      * And inject needed dependancies
