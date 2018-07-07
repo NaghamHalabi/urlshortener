@@ -18,27 +18,44 @@ class HttpClientAdapter implements HttpClientInterface
 {
 
     /**
-     * @var http version
+     * http version
+     *
+     * @var string
      */
     protected $version = '1.1';
 
     /**
-     * @var http request default data
+     * http request default data
+     *
+     * @var Array
      */
     protected $data = [];
 
     /**
-     * @var http request headers default
+     * http request default body
+     *
+     * @var string
+     */
+    protected $body = '';
+
+    /**
+     * http request headers default
+     *
+     * @var Array
      */
     protected $headers = [];
 
     /**
-     * @var http request url to be sent to
+     * http request url to be sent to
+     *
+     * @var string
      */
     protected $url;
 
     /**
-     * @var http request verb default value
+     * http request verb default value
+     *
+     * @var string
      */
     protected $verb = 'get';
 
