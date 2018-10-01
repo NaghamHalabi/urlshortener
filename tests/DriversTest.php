@@ -6,6 +6,14 @@ use hassanalisalem\urlshortener\Core\HttpClientAdapter;
 use hassanalisalem\urlshortener\Drivers\Bitly;
 use hassanalisalem\urlshortener\Shortener;
 
+/**
+ *
+ * TODO: to make some mock for each driver response
+ * instead of making the real request
+ *
+ * also to remove these keys from the tests
+ *
+ */
 class DriversTest extends TestCase
 {
 
