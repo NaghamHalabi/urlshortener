@@ -2,9 +2,10 @@
 
 namespace hassanalisalem\urlshortener\Core;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
+use Psr\Http\Message\StreamInterface;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Client;
 
 /**
  * This class a Http Client wrapper
@@ -76,14 +77,14 @@ class HttpClientAdapter implements HttpClientInterface
      * @param Array $parameters
      * @return String
      */
-    private function buildUrl($url, $parameters = [])
+    private function buildUrl(string $url, array $parameters = []): string
     {
         return $url.'?'.join('&', array_map(function ($key, $value) {
             return "$key=$value";
         }, array_keys($parameters), $parameters));
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -97,7 +98,7 @@ class HttpClientAdapter implements HttpClientInterface
      * @param Array $headers
      * @return JSON Object
      */
-    public function prepareRequest($verb, $url, $parameters = [])
+    public function prepareRequest(string $verb, string $url, array $parameters = []): HttpClientInterface
     {
         $url = $this->buildUrl($url, $parameters);
         $verb = strtoupper($verb);
@@ -112,7 +113,7 @@ class HttpClientAdapter implements HttpClientInterface
      * @param Array $headers
      * @return HttpClientAdapter $this [for chaining]
      */
-    public function setHeaders($headers)
+    public function setHeaders(array $headers): HttpClientInterface
     {
         $this->headers = $headers;
         return $this;
@@ -124,7 +125,7 @@ class HttpClientAdapter implements HttpClientInterface
      * @param Array $data
      * @return HttpClientAdapter $this
      */
-    public function setData($data)
+    public function setData(array $data): HttpClientInterface
     {
         $this->data = data;
         return $this;
@@ -136,7 +137,7 @@ class HttpClientAdapter implements HttpClientInterface
      * @param String $body
      * @return HttpClientAdapter $this
      */
-    public function setBody($body)
+    public function setBody(string $body): HttpClientInterface
     {
         $this->body = $body;
         return $this;
@@ -147,7 +148,7 @@ class HttpClientAdapter implements HttpClientInterface
      *
      * @return HttpClientAdapter $this
      */
-    public function send()
+    public function send(): HttpClientInterface
     {
         $this->response = $this->client->request(
             $this->verb,
@@ -167,7 +168,7 @@ class HttpClientAdapter implements HttpClientInterface
      *
      * @return integer
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->response->getStatusCode();
     }
@@ -175,9 +176,9 @@ class HttpClientAdapter implements HttpClientInterface
     /**
      * get response Body
      *
-     * @return string
+     * @return Stream
      */
-    public function getBody()
+    public function getBody(): StreamInterface
     {
         return $this->response->getBody();
     }
@@ -187,7 +188,7 @@ class HttpClientAdapter implements HttpClientInterface
      *
      * @return string
      */
-    public function getContents()
+    public function getContents(): string
     {
         return $this->getBody()->getContents();
     }

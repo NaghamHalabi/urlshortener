@@ -1,6 +1,8 @@
 <?php
 
 namespace hassanalisalem\urlshortener\Drivers;
+
+use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
 use  hassanalisalem\urlshortener\Contracts\DriverInterface;
 
 /**
@@ -22,7 +24,7 @@ class Bcvc extends Driver implements DriverInterface
      * @param Array $config
      * @param HttpClientInterface $httpClient
      */
-    function __construct($config, $httpClient)
+    function __construct(array $config, HttpClientInterface $httpClient)
     {
         $this->key = $config['key'];
         $this->uid = $config['uid'];
@@ -48,7 +50,7 @@ class Bcvc extends Driver implements DriverInterface
      * @param string $jsonBody
      * @return Array
      */
-    private function getLinkData($url)
+    private function getLinkData(string $url)
     {
         $responseBody = $this->httpClient->prepareRequest(
             'get',

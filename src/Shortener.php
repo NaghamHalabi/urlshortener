@@ -2,9 +2,9 @@
 
 namespace hassanalisalem\urlshortener;
 
-use hassanalisalem\urlshortener\Core\DriverLoader;
 use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
 use hassanalisalem\urlshortener\Core\HttpClientAdapter;
+use hassanalisalem\urlshortener\Core\DriverLoader;
 
 /**
  * This class is the main entry point of the package
@@ -25,7 +25,7 @@ class Shortener extends DriverLoader
      * @param Array $config
      * @param HttpClientInterface $httpClient
      */
-    function __construct($config, HttpClientInterface $httpClient = null)
+    function __construct(array $config, HttpClientInterface $httpClient = null)
     {
         if($httpClient == null) {
             $httpClient = new HttpClientAdapter;
@@ -44,7 +44,7 @@ class Shortener extends DriverLoader
      * @param url $url
      * @return string url
      */
-    public function shorten($url)
+    public function shorten(string $url)
     {
         return $this->driver->getShortUrl($url);
     }

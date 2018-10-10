@@ -1,6 +1,8 @@
 <?php
 
 namespace hassanalisalem\urlshortener\Drivers;
+
+use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
 use  hassanalisalem\urlshortener\Contracts\DriverInterface;
 
 /**
@@ -17,7 +19,7 @@ class Tinycc extends Driver implements DriverInterface
     protected $urlShortenerEndPoint = 'shorten';
     protected $baseUrl = 'https://tiny.cc';
 
-    function __construct($config, $httpClient)
+    function __construct(array $config, HttpClientInterface $httpClient)
     {
         $this->apiKey = $config['api_key'];
         $this->login = $config['login'];

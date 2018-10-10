@@ -2,6 +2,8 @@
 
 namespace hassanalisalem\urlshortener\Core;
 
+use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
+
 /**
  * Driver loader is responsible to load the driver.
  * it is the parent of the shortener, because it
@@ -14,12 +16,12 @@ namespace hassanalisalem\urlshortener\Core;
 class DriverLoader
 {
     private $namespace = '\\hassanalisalem\\urlshortener\\Drivers\\';
-    function __construct($config)
+    function __construct(array $config)
     {
         $this->config = $config;
     }
 
-    public function loadDriver($name, $httpClient)
+    public function loadDriver(string $name, HttpClientInterface $httpClient)
     {
         $className = $this->getClassName($name);
         if(!class_exists($className)) {
@@ -28,7 +30,7 @@ class DriverLoader
         return new $className($this->config, $httpClient);
     }
 
-    private function getClassName($name)
+    private function getClassName(string $name)
     {
         return $this->namespace . ucfirst($name);
     }

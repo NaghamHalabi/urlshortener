@@ -2,6 +2,8 @@
 
 namespace hassanalisalem\urlshortener\Drivers;
 
+use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
+
 /**
  * the driver abstract class, here should be the validation
  * of every thing inside every driver 
@@ -25,7 +27,7 @@ abstract class Driver
      *
      * @param $httpClient
      */
-    protected function setHttpClient($httpClient)
+    protected function setHttpClient(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }

@@ -1,6 +1,8 @@
 <?php
 
 namespace hassanalisalem\urlshortener\Drivers;
+
+use hassanalisalem\urlshortener\Contracts\HttpClientInterface;
 use  hassanalisalem\urlshortener\Contracts\DriverInterface;
 
 /**
@@ -17,7 +19,7 @@ class Bitly extends Driver implements DriverInterface
     protected $urlShortenerEndPoint = 'shorten';
     protected $baseUrl = 'https://api-ssl.bitly.com/v4';
 
-    function __construct($config, $httpClient)
+    function __construct(array $config, HttpClientInterface $httpClient)
     {
         $this->accessToken = $config['access_token'];
         $this->httpClient = $httpClient;
@@ -42,7 +44,7 @@ class Bitly extends Driver implements DriverInterface
      * shorten
      *
      */
-    public function shorten($url)
+    public function shorten(string $url)
     {
         $guid = $this->getFirstGuid();
         $jsonBody = json_encode([
